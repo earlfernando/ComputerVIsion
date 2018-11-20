@@ -16,14 +16,15 @@ figure(2)
 new_corners = inv(K) * corners;
 plot ( new_corners (1 ,[1: end 1]) , new_corners (2 ,[1: end 1]) , 'r*-' );
 axis ij
+axis equal 
 
 %Get the 3D points:
 v = pflat(v);
 pi = v(1:3);
 s = - pi' * new_corners;
 points3D = [new_corners;s];
-points3D= pflat(points3D)
-points3D = points3D(1:3,:)
+points3D= pflat(points3D);
+points3D = points3D(1:3,:);
 
 C = [0;0;0];
 axis1 = [0;0;1];
@@ -48,6 +49,7 @@ new_new_corners = pflat(new_new_corners);
 figure(4)
 plot ( new_new_corners(1 ,[1: end 1]) , new_new_corners(2 ,[1: end 1]) , 'r*-' );
 axis ij
+axis equal
 hold on
 
 punti = RT*[points3D;ones(1,4)];
@@ -66,4 +68,5 @@ tform = maketform('projective',Htot');
 % of the same size as the original one .
 imagesc ( xdata , ydata , new_im );
 colormap('gray')
+axis equal
 % plots the new image with xdata and ydata on the axes
