@@ -39,7 +39,13 @@ a = P1(:,4);
 t = inv(K)*a;
 dila = -t;
 C_A = inv(R)*dila;
+%Alternatively:
+C_B = null(P1);
+C_B =pflat(C_B);
+C_B = C_B(1:3);
 
 quiver3(C_A(1), C_A(2), C_A(3), R(3,1), R(3,2), R(3,3), 10)
 
 axis = R(3,1:3); %Already normalized to length 1
+%Alternatively:
+axis_B = P1(3,1:3);
