@@ -54,11 +54,14 @@ punti = RT*[points3D;ones(1,4)];
 punti = pflat(punti);
 plot ( punti(1 ,[1: end 1]) , punti(2 ,[1: end 1]) , 'g*-' );
 
+Htot = K*H*inv(K);
+hold off
+figure (5)
 
-tform = maketform ( ’ projective ’, Htot ’);
+tform = maketform('projective',Htot');
 % Creates a projective transformation that can be used in imtransform
 % NOTE : Matlab uses the transposed version of the homografi .
-[ new_im , xdata , ydata ] = imtransform (im , tform , ’ size ’, size ( im ));
+[ new_im , xdata , ydata ] = imtransform (im , tform , 'size', size ( im ));
 % Creastes a transformed image ( using tform )
 % of the same size as the original one .
 imagesc ( xdata , ydata , new_im );
