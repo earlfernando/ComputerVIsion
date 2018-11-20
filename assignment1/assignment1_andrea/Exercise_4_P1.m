@@ -58,6 +58,7 @@ projection = projection(1:2,1:end);
 
 A = imread('compEx4im1.JPG');
 B = imread('compEx4im2.JPG');
+figure(2)
 imshow(A, 'InitialMagnification',150)
 hold on
 plot(projection(1,1:end),projection(2,1:end),'r.' )
