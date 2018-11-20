@@ -61,8 +61,9 @@ figure (5)
 tform = maketform('projective',Htot');
 % Creates a projective transformation that can be used in imtransform
 % NOTE : Matlab uses the transposed version of the homografi .
-[ new_im , xdata , ydata ] = imtransform (im , tform , 'size', size ( im ));
+[ new_im , xdata , ydata ] = imtransform (A , tform , 'size', size (A));
 % Creastes a transformed image ( using tform )
 % of the same size as the original one .
 imagesc ( xdata , ydata , new_im );
+colormap('gray')
 % plots the new image with xdata and ydata on the axes
