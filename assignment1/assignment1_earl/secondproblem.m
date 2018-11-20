@@ -1,5 +1,6 @@
+close all;
 clear all;
-loaded_image = imread("compEx2.JPG");
+loaded_image = imread('compEx2.JPG');
 imagesc(loaded_image);
 colormap(gray);
 points = load('compEx2.mat');

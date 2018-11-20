@@ -7,7 +7,11 @@ out_3d = pflat(c);
 figure(1);
 plot(out_2d(1,:),out_2d(2,:),'.');
 title('2d points');
+axis equal 
+xlim([-1.3,1.3])
+ylim([-1.3,1.3])
+
 figure(2);
 plot3(out_3d(1,:),out_3d(2,:),out_3d(3,:),'.');
 title('3d points');
-
+axis equal

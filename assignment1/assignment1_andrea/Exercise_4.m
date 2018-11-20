@@ -42,10 +42,4 @@ C_A = inv(R)*dila;
 
 quiver3(C_A(1), C_A(2), C_A(3), R(3,1), R(3,2), R(3,3), 10)
 
-vector = R(3,1:3)-C_A';
-n = norm(vector);
-vector_normalized =  vector./n;
-
-direction = C_A'+vector_normalized
-hold on
-quiver3(C_A(1), C_A(2), C_A(3), direction(1), direction(2), direction(3), 1)
+axis = R(3,1:3); %Already normalized to length 1
