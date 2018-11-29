@@ -63,7 +63,7 @@ end
 p_p1 = p_new_cell_array;
 hold on 
 plotcams(p_new_cell_array);
-
+axis equal
 figure(6)
 p=plot3(new_3d_points_2(1,:),new_3d_points_2(2,:),new_3d_points_2(3,:),'.');
 p.MarkerSize= 4;
@@ -77,7 +77,7 @@ end
 p_p2= p_new_cell_array;
 hold on 
 plotcams(p_new_cell_array);
-
+axis equal
 
 P_matrix= cell2mat(p_p1(1,1));
 
