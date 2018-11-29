@@ -5,7 +5,7 @@ load('compEx3data.mat')
 %Get camera matrices:
 plot_result = false;
 plot_normalized_points = false;
-normalize = false;
+normalize = true;
 remotion = false;
 P_1 = get_P(1, normalize, plot_normalized_points, plot_result,remotion);
 P_2 = get_P(2, normalize, plot_normalized_points, plot_result,remotion);
@@ -23,9 +23,11 @@ A_2 = P_2(3,1:3);
 %Plot 3d points and arrows:
 figure
 hold on;
-quiver3(C_1(1), C_1(2), C_1(3), A_1(1), A_1(2), A_1(3), 10000)
+%quiver3(C_1(1), C_1(2), C_1(3), A_1(1), A_1(2), A_1(3), 10000)
+plotcams({P_1,P_2})
+
 hold on;
-quiver3(C_2(1), C_2(2), C_2(3), A_2(1), A_2(2), A_2(3), 10000)
+%quiver3(C_2(1), C_2(2), C_2(3), A_2(1), A_2(2), A_2(3), 10000)
 
 plot3([ Xmodel(1 , startind ); Xmodel(1 , endind )] ,...
 [ Xmodel(2 , startind ); Xmodel(2 , endind )] ,...
@@ -37,9 +39,20 @@ hold off;
 [r,q]=rq(P_1(1:3,1:3));
 K_1 = r; 
 R_1 = q;
+valor = K_1(3,3);
+K_1 = K_1./valor;
+R_1 = R_1*valor;
+t_1 = inv(K_1)*P_1;
+t_1 = t_1(1:3,4);
+
 [r,q]=rq(P_2(1:3,1:3));
 K_2 = r; 
 R_2 = q;
+valor = K_2(3,3);
+K_2 = K_2./valor;
+R_2 = R_2*valor;
+t_2 = inv(K_2)*P_2;
+t_2 = t_2(1:3,4);
 
 function e = compute_error(xm, xp)
  
