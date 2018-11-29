@@ -6,7 +6,7 @@ load('compEx3data.mat')
 plot_result = false;
 plot_normalized_points = false;
 normalize = false;
-remotion = true;
+remotion = false;
 P_1 = get_P(1, normalize, plot_normalized_points, plot_result,remotion);
 P_2 = get_P(2, normalize, plot_normalized_points, plot_result,remotion);
 
@@ -20,7 +20,7 @@ C_2 = pflat(C_2);
 A_1 = P_1(3,1:3);
 A_2 = P_2(3,1:3);
 
-%
+%Plot 3d points and arrows:
 figure
 hold on;
 quiver3(C_1(1), C_1(2), C_1(3), A_1(1), A_1(2), A_1(3), 10000)
@@ -30,6 +30,8 @@ quiver3(C_2(1), C_2(2), C_2(3), A_2(1), A_2(2), A_2(3), 10000)
 plot3([ Xmodel(1 , startind ); Xmodel(1 , endind )] ,...
 [ Xmodel(2 , startind ); Xmodel(2 , endind )] ,...
 [ Xmodel(3 , startind ); Xmodel(3 , endind )] , 'b - ' );
+
+
 hold off;
 
 [r,q]=rq(P_1(1:3,1:3));
@@ -48,7 +50,7 @@ e = sqrt(e/n);
 end
 function P = get_P(i, normalize, plot_normalized_points, plot_result,remotion)
     numero = i;
-    load('compEx3data.mat')
+    load('compEx3data.mat');
     pointss = cell2mat(x(i));
     if remotion == true
         %remove points expect the listed ones:
@@ -94,11 +96,13 @@ function P = get_P(i, normalize, plot_normalized_points, plot_result,remotion)
 
     [U ,S ,V] = svd ( M ); % Computes the singular value decomposition of M
     sol = V(1:end,end);
+    fprintf("\nthe ||v|| is :%f",norm(sol));
+    fprintf("\nthe ||Mv|| is :%f",norm(M*sol));
     P = reshape( sol(1:12) ,[4 3])';
     %Check if is in front of:
     test_1 = P*Xmodel(1:4,2);
     if Xmodel(4,2)*test_1(3) <= 0
-        fprintf("multiplying per -1")
+        fprintf("\nmultiplying per -1")
         P =-P;
     end
         
@@ -119,10 +123,11 @@ function P = get_P(i, normalize, plot_normalized_points, plot_result,remotion)
         figure
         plot(points_normalized(1,:),points_normalized(2,:),'*')
         %Check the mean distance from the center:
-        mean(sqrt(points_normalized(1,:).^2 + points_normalized(2,:).^2) )
+        result_m_s = mean(sqrt(points_normalized(1,:).^2 + points_normalized(2,:).^2) );
+        fprintf("\n Average distance in %d img is %f:",numero,result_m_s);
     end    
     
     e = compute_error(pointss, new_points_new);
-    fprintf("\nError for %d img is %f:",numero,e);
+    fprintf("\nError for %d img is %f:\n",numero,e);
     
 end
