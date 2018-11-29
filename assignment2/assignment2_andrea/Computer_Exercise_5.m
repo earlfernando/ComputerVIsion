@@ -9,8 +9,10 @@ one_or_two = 2;
 
 %Normalize_the_points:
 if 1==0
-    P_1 = inv(K_1)*P_1;
-    P_2 = inv(K_2)*P_2;
+P_1 = inv(K_1)*P_1;
+P_2 = inv(K_2)*P_2;
+end
+if 1==0
     x1 = inv(K_1)*[x1;ones(1,size(x1,2))];
     x2 = inv(K_2)*[x2;ones(1,size(x2,2))];
     x1 =pflat(x1);
@@ -37,7 +39,8 @@ end
 
 xproj1 = pflat( P_1 * X );
 xproj2 = pflat( P_2 * X );
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Remove this to all matcjes
+if 1 ==1
 % Computes the projections
 good_points = ( sqrt( sum(( x1 - xproj1(1:2 ,:)).^2)) < 3 & ...
 sqrt( sum(( x2 - xproj2(1:2 ,:)).^2)) < 3);
@@ -45,11 +48,11 @@ sqrt( sum(( x2 - xproj2(1:2 ,:)).^2)) < 3);
 X = X(: , good_points );
 x1 = x1(: , good_points );
 x2 = x2(: , good_points );
-% Removes points that are not good enough .
 
 xproj1 = pflat( P_1 * X );
 xproj2 = pflat( P_2 * X );
-
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Plot the two images
 
 if one_or_two == 1
@@ -72,7 +75,11 @@ else
     fprintf("\nRMS Error is :%f",compute_error(x2, xproj2(1:2,1:end)))
 end
 
-
+figure
+plot3(X(1,1:end),X(2,1:end),X(3,1:end),'.')
+hold on
+plotcams({P_1,P_2})
+axis equal
 
 
 function e = compute_error(xm, xp)

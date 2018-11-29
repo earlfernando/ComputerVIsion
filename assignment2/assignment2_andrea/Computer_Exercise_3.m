@@ -5,7 +5,7 @@ load('compEx3data.mat')
 %Get camera matrices:
 plot_result = false;
 plot_normalized_points = false;
-normalize = true;
+normalize = false;
 remotion = false;
 P_1 = get_P(1, normalize, plot_normalized_points, plot_result,remotion);
 P_2 = get_P(2, normalize, plot_normalized_points, plot_result,remotion);
@@ -110,6 +110,7 @@ function P = get_P(i, normalize, plot_normalized_points, plot_result,remotion)
     [U ,S ,V] = svd ( M ); % Computes the singular value decomposition of M
     sol = V(1:end,end);
     fprintf("\nthe ||v|| is :%f",norm(sol));
+    fprintf("\nthe eigenvalue is :%f",S(end,end));
     fprintf("\nthe ||Mv|| is :%f",norm(M*sol));
     P = reshape( sol(1:12) ,[4 3])';
     %Check if is in front of:
@@ -141,6 +142,6 @@ function P = get_P(i, normalize, plot_normalized_points, plot_result,remotion)
     end    
     
     e = compute_error(pointss, new_points_new);
-    fprintf("\nError for %d img is %f:\n",numero,e);
+    fprintf("\nError for %d img is %f\n",numero,e);
     
 end
