@@ -25,7 +25,7 @@ P_1 = [eye(3),[0;0;0]];
 for j=1:4
     %j=1
     P_2 = P{j};
-
+  
     for i =1:size(x1_n,2)
         point_1 = [x1_n(1:2,i);1];
         point_2 = [x2_n(1:2,i);1];
@@ -38,21 +38,27 @@ for j=1:4
 
         point_3D = sol(1:4);
         X(1:4, i) = pflat(point_3D); 
+        
 
     end
+    agree1 = [P_2*X];
+    agree2 = [P_1*X];
+    count = sum(agree1(3,1:end)<0) + sum(agree2(3,1:end)<0) ;
+    fprintf("For image %d there are %d occurence of a point not in front of a camera\n", j, count)
     
-    if j == 2
+
         figure
         plotcams({P_1;P{j}})
         hold on
         plot3(X(1,:),X(2,:),X(3,:),'g.')
         axis equal
         hold off
-    end    
+
     
     x_projection1 = pflat(K*P_1*X);
     x_projection2 = pflat(K*P_2*X);
-    if j == 2
+    
+    if j == 20
         figure
         img = imread('kronan1.JPG');
         imshow(img)
