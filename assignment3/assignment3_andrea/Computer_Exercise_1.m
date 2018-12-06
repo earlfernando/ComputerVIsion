@@ -46,7 +46,7 @@ fprintf("\nthe ||v|| is :%f",norm(sol));
 fprintf("\nthe eigenvalue is :%f",S(end,end));
 fprintf("\nthe ||Mv|| is :%f",norm(M*sol));
 
-F_old = reshape( sol ,[3 3])
+F_old = reshape( sol ,[3 3])'
 [U ,S ,V] = svd (F_old);
 S(3,3) = 0;
 F_old = U*S*V' ;

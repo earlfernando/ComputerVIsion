@@ -8,9 +8,6 @@ P_1 = [eye(3),[0;0;0]];
 e2 = null(F');
 P_2 = [get_matr_cross(e2)*F, e2];
 
-%P_2 = [ -0.0016    0.0057    0.2163    0.9763
-%    0.0070   -0.0257   -0.9763    0.2163
-%    0.0000    0.0000   -0.0273    0.0001 ]
 
 
 for i =1:size(x1_norm,2)
@@ -43,7 +40,6 @@ plot(x_projection1(1,1:end), x_projection1(2,1:end),'xr')
 
 figure(2)
 plot3(X(1,1:end),X(2,1:end),X(3,1:end),'.')
-axis ij
 axis equal 
 function A = get_matr_cross(y)
     A = zeros(3);
