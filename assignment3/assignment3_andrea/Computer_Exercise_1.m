@@ -5,7 +5,7 @@ clc
 load('compEx1data.mat')
 img_1 = imread('kronan1.JPG');
 
-normalization = true;
+normalization = false;
 
 x1 = cell2mat(x(1));
 x2 = cell2mat(x(2));
@@ -61,6 +61,8 @@ F = F./F(3,3);
 
 l = F*x {1}; % Computes the epipolar lines
 l = l ./ sqrt ( repmat ( l (1 ,:).^2 + l (2 ,:).^2 ,[3 1]));
+distance =abs ( sum ( l .* x {2}));
+mean_distance =  mean(distance)
 
 hist ( abs ( sum ( l .* x {2})) ,100);
 
