@@ -9,21 +9,8 @@ Z = [0 1 0; -1 0 0; 0 ,0 0];
 fprintf("Just cheking that U and V are the right ones: %d \n", det(U *V')) 
 u3 = U(1:3,3);
 
-
-    for i=1:2
-    %Get the mean, std and compute s:
-    m_ = mean(x {i }(1:2 ,:) ,2); %Computes the mean value of the 1 st and 2 nd rows ow x{ i}
-    std_ = std(x {i }(1:2 ,:) ,0 ,2);% Standard deviation of the 1 st and 2 nd rows ow x{ i}
-    s = 1./std_;
-    N = [s(1),0,-s(1)*m_(1);0,s(2),-s(2)*m_(2);0,0,1];
-        if i==1
-            N1 = N;
-            x1_norm = N1*x1;
-        else
-            N2 = N;
-            x2_norm = N2*x2;
-        end
-    end
+x1_n = inv(K) * x1;
+x2_n = inv(K) * x2;
 
 
 P_1 = [U*W*V' u3]; 
@@ -34,26 +21,45 @@ P = {P_1,P_2,P_3,P_4};
 
 P_1 = [eye(3),[0;0;0]];
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%for i=1:4
-P_2 = P{1};
 
-for i =1:size(x1_norm,2)
-    point_1 = [x1_norm(1:2,i);1];
-    point_2 = [x2_norm(1:2,i);1];
-    M = [N1*P_1;N2*P_2];
-    M(1:3,5)= -point_1;
-    M(4:end,6)= -point_2;
+for j=1:4
+    %j=1
+    P_2 = P{j};
 
-    [U ,S ,V] = svd ( M ); % Computes the singular value decomposition of M
-    sol = V(1:end,end);
+    for i =1:size(x1_n,2)
+        point_1 = [x1_n(1:2,i);1];
+        point_2 = [x2_n(1:2,i);1];
+        M = [P_1;P_2];
+        M(1:3,5)= -point_1;
+        M(4:end,6)= -point_2;
 
-    point_3D = sol(1:4);
-    X(1:4, i) = pflat(point_3D); 
+        [U ,S ,V] = svd ( M ); % Computes the singular value decomposition of M
+        sol = V(1:end,end);
+
+        point_3D = sol(1:4);
+        X(1:4, i) = pflat(point_3D); 
+
+    end
     
+    if j == 2
+        figure
+        plotcams({P_1;P{j}})
+        hold on
+        plot3(X(1,:),X(2,:),X(3,:),'g.')
+        axis equal
+        hold off
+    end    
+    
+    x_projection1 = pflat(K*P_1*X);
+    x_projection2 = pflat(K*P_2*X);
+    if j == 2
+        figure
+        img = imread('kronan1.JPG');
+        imshow(img)
+        hold on
+        plot(x_projection1(1,1:end),x_projection1(2,1:end),'xr')
+        hold on 
+        plot(x1(1,1:end),x1(2,1:end),'ob')
+        hold off
+    end
 end
-
-x_projection1 = pflat(P_1*X);
-x_projection2 = pflat(P_2*X);
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%end
