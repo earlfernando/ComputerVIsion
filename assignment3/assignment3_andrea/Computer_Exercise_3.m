@@ -53,7 +53,8 @@ for i=random_indexes
     plot(point(1),point(2),'xr','LineWidth',2.5)
     rital(l_point)
 end
-
+distance = abs ( sum ( l .* x {2}));
+mean_distance= mean(distance)
 figure
 hist ( abs ( sum ( l .* x {2})) ,100);
 
