@@ -63,6 +63,19 @@ l = F*x {1}; % Computes the epipolar lines
 l = l ./ sqrt ( repmat ( l (1 ,:).^2 + l (2 ,:).^2 ,[3 1]));
 distance =abs ( sum ( l .* x {2}));
 mean_distance =  mean(distance)
-
+figure
 hist ( abs ( sum ( l .* x {2})) ,100);
+
+figure
+random_indexes = floor(rand(1,20)*2008) +1 ;
+
+img = imread('kronan2.JPG');
+imshow(img)
+hold on
+for i=random_indexes
+    point = x2(1:3,i);
+    l_point = l(1:3,i);
+    plot(point(1),point(2),'xr','LineWidth',2.5)
+    rital(l_point)
+end
 
