@@ -36,10 +36,13 @@ end
 fprintf("Epipolar constrains fullified? %d \n", (x2_n(1:3,9))'*E* x1_n(1:3,9) )
 
 E = E./E(3,3);
+K
 F= inv(K)'*E*inv(K);
 
 
-l = F*x1;
+l = F*x{1};
+
+l = l./sqrt( repmat(l(1 ,:).^2 + l(2 ,:).^2 ,[3 1]));
 
 
 random_indexes = floor(rand(1,20)*2008) +1 ;
@@ -53,9 +56,8 @@ for i=random_indexes
     plot(point(1),point(2),'xr','LineWidth',2.5)
     rital(l_point)
 end
-distance = abs ( sum ( l .* x {2}));
-mean_distance= mean(distance)
 figure
 hist ( abs ( sum ( l .* x {2})) ,100);
+distance = mean(abs ( sum ( l .* x {2})))
 
 
