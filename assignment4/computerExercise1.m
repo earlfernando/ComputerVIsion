@@ -35,7 +35,7 @@ for i =1 : iterations
     end  
 end
 X_inliers_ransac= X(:,best_inlier_indicies);
-ransac_rms = sqrt ( sum (( plane'* X_inliers_ransac).^2)/ size (X_inliers_ransac,2));
+ransac_rms = sqrt ( sum (( plane'* X_inliers_ransac).^2)/ size (X_inliers_ransac,2))
 %plot
 figure;
 histogram(abs(plane'*X_inliers_ransac),100);
@@ -76,12 +76,18 @@ points1_2d = pflat(norm_P1*X);
 points2_2d = pflat(norm_P2*X);
 new_points2_2d = K*pflat(H*points1_2d);
 points2_2d = K*points2_2d;
+points1_2d = K*points1_2d;
 %plot
 figure;
 imshow(im2);
 hold on
 plot(points2_2d(1,:),points2_2d(2,:),'bo');
 plot(new_points2_2d(1,:),new_points2_2d(2,:),'g+');
+figure;
+hold on
+imshow(im1);
+hold on
+plot(points1_2d(1,:),points1_2d(2,:),'bo');
 
 
 %functions
