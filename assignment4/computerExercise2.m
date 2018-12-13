@@ -2,6 +2,10 @@ clear all
 close all
 A=imread('a.jpg');
 B=imread('b.jpg');
+figure;
+imshow(A);
+figure;
+imshow(B);
 [ fA dA ] = vl_sift ( single ( rgb2gray ( A )) );
 [ fB dB ] = vl_sift ( single ( rgb2gray ( B )) );
 matches = vl_ubcmatch ( dA , dB );
