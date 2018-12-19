@@ -55,15 +55,15 @@ x2 = pflat(P2 *X_inliers_ransac);
 im1=imread('house1.jpg');
 im2=imread('house2.jpg');
 %plot
-figure;
-imshow(im1);
-hold on
-plot(x1(1,:),x1(2,:),'b.','markersize', 20)
-hold off
-figure(4);
-imshow(im2);
-hold on
-plot(x2(1,:),x2(2,:),'b.','markersize', 20)
+% figure;
+% imshow(im1);
+% hold on
+% plot(x1(1,:),x1(2,:),'b.','markersize', 20)
+% hold off
+% figure(4);
+% imshow(im2);
+% hold on
+% plot(x2(1,:),x2(2,:),'b.','markersize', 20)
 
 %Compute Homographies
 norm_P1 = inv(K)*P1;
@@ -78,16 +78,16 @@ new_points2_2d = K*pflat(H*points1_2d);
 points2_2d = K*points2_2d;
 points1_2d = K*points1_2d;
 %plot
-figure;
-imshow(im2);
-hold on
-plot(points2_2d(1,:),points2_2d(2,:),'bo');
-plot(new_points2_2d(1,:),new_points2_2d(2,:),'g+');
-figure;
-hold on
-imshow(im1);
-hold on
-plot(points1_2d(1,:),points1_2d(2,:),'bo');
+% figure;
+% imshow(im2);
+% hold on
+% plot(points2_2d(1,:),points2_2d(2,:),'bo');
+% plot(new_points2_2d(1,:),new_points2_2d(2,:),'g+');
+% figure;
+% hold on
+% imshow(im1);
+% hold on
+% plot(points1_2d(1,:),points1_2d(2,:),'bo');
 
 
 %functions
