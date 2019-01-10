@@ -26,8 +26,8 @@ plot_result(s,e,H4,4)
 
 function plot_result(s,e,H,i)
     % T ransforming starting and ending points:
-    s_r = H * s ;
-    e_r = H * e ;
+    s_r = pflat(H * s );
+    e_r = pflat(H * e );
     
     % Plotting in a new figure:
     figure(i)
