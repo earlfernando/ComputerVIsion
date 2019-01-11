@@ -6,7 +6,7 @@ run('Computer_Exercise_3.m')
 run('Computer_Exercise_4.m')
 close all
 one_or_two = 2;
-not_good = false;
+not_good = true;
 actual_1 =P_1;
 actual_2 =P_2;
 P_1 = inv(K_1)*P_1;
@@ -48,6 +48,18 @@ if not_good
     x2 = [x2;ones(1,size(x2,2))];
     x1= K_1*x1(1:3,:);
     x2 = K_2*x2(1:3,:);
+    % error calculation 
+x1_error = x1-xproj1;
+x2_error = x2-xproj2;
+x1_true = ~isnan(x1_error);
+x2_true = ~isnan(x2_error);
+n_1 =size(x1_true,2);
+n_2= size(x2_true,2);
+e1_n = sqrt(norm(x1_error(x1_true),2));
+e2_n = sqrt(norm(x2_error(x2_true),2));
+error_1 = compute_error(x1,xproj1);
+error_2 = compute_error(x2,xproj2);
+    
     if one_or_two==1
         figure(1);
         imshow(img_1);
@@ -136,9 +148,11 @@ hold off;
 
 
 function e = compute_error(xm, xp)
- 
-n = size(xm,2);
-e = norm(xm-xp)^2;
+truth =xm-xp;
+ind=~isnan(truth);
+diff = truth(ind);
+n = size(diff,2);
+e = norm(diff)^2;
 e = sqrt(e/n);
 
 end

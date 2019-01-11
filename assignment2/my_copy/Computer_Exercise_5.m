@@ -30,6 +30,17 @@ end
 
 xproj1 = pflat( P_1 * X );
 xproj2 = pflat( P_2 * X );
+x1_error = x1-xproj1(1:2,:);
+x2_error = x2-xproj2(1:2,:);
+x1_true = ~isnan(x1_error);
+x2_true = ~isnan(x2_error);
+n_1 =size(x1_true,2);
+n_2= size(x2_true,2);
+e1_n = sqrt(norm(x1_error(x1_true),2));
+e2_n = sqrt(norm(x2_error(x2_true),2));
+error_1 = compute_error(x1,xproj1(1:2,:));
+error_2 = compute_error(x2,xproj2(1:2,:));
+
 if not_good
     if one_or_two==1
         figure(1);
@@ -115,8 +126,10 @@ hold off;
 
 function e = compute_error(xm, xp)
  
-n = size(xm,2);
-e = norm(xm-xp)^2;
+truth =xm-xp;
+ind=~isnan(truth);
+diff = truth(ind);
+n = size(diff,2);
+e = norm(diff)^2;
 e = sqrt(e/n);
-
 end
